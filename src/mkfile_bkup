@@ -1,0 +1,27 @@
+CFLAGS = -g -Wall -Werror -pedantic -Wextra -Wconversion -std=gnu11
+#La opcion -g hace que el compilador le agregue al binario informacion\
+#extra que se va a utilizar para debugger, por ejemplo con GDB
+
+server.o: ./server.c ./fifo_seqnum.h  
+	gcc $(CFLAGS) server.c -o server
+	
+client_w_FIFO.o:  ./client_w_FIFO.c ./fifo_seqnum.h
+	gcc $(CFLAGS) -c ./client_w_FIFO.c
+
+get_num.o: lib/get_num.c lib/get_num.h
+	gcc $(CFLAGS) -c ./get_num.c 
+
+error_functions.o: lib/error_functions.c lib/error_functions.h lib/ename.c.inc lib/tlpi_hdr.h
+	gcc $(CFLAGS) -c ./error_functions.c 
+	
+clean: 
+	rm -f $(BINARY) $(OBJS)
+	rm -f *.o
+#	ls | grep -v "\." | xargs rm #to remove all executables
+# 	WARNING: The last command also removes the Makefile
+
+celan: 
+	rm -f $(BINARY) $(OBJS)
+	rm -f *.o
+#	ls | grep -v "\." | xargs rm #to remove all executables
+# 	WARNING: The last command also removes the Makefile
